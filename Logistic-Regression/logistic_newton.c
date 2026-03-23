@@ -61,8 +61,7 @@ void inversematrix(float matrix[d][d], float inverse[d][d]) {
 }
 
 int main(){
-    int epoch = 10; // Newton's method converges fast
-
+    int epoch = 10; //it has quadratic convergence so it is fast
     FILE *fx = fopen("/home/amrut/Downloads/logisticX.csv", "r");
     FILE *fy = fopen("/home/amrut/Downloads/logisticY.csv", "r");
 
@@ -134,9 +133,6 @@ int main(){
     printf("Theta 1: %f\n", theta[1]);
     printf("Theta 2: %f\n\n", theta[2]);
 
-    // ==========================================
-    // 1. Calculate Overall Training Accuracy
-    // ==========================================
     int correct_predictions = 0;
     for (int i = 0; i < m_count; i++) {
         float z = theta[0] + theta[1] * X[i][1] + theta[2] * X[i][2];
@@ -149,9 +145,7 @@ int main(){
     }
     float accuracy = ((float)correct_predictions / m_count) * 100.0f;
     printf("Training Accuracy: %.2f%%\n\n", accuracy);
-// ==========================================
-    // 2. Interactive Prediction Loop
-    // ==========================================
+
     int choice;
     float input_x1, input_x2;
 
@@ -161,7 +155,7 @@ int main(){
         printf("Choice: ");
         
         if (scanf("%d", &choice) != 1) {
-            while(getchar() != '\n'); // clear buffer
+            while(getchar() != '\n'); 
             continue;
         }
 
@@ -176,7 +170,7 @@ int main(){
             printf("Enter Feature 2 (x2): ");
             if (scanf("%f", &input_x2) != 1) {
                 while(getchar() != '\n'); 
-                printf("Invalid input. Please enter a number.\n\n");
+                printf("Please enter a number.\n\n");
                 continue;
             }
 
@@ -194,8 +188,7 @@ int main(){
             break;
         } 
         else {
-            printf("Invalid choice. Try again.\n\n");
+            printf("Try again.\n\n");
         }
     }    
-  return 0;
 }
