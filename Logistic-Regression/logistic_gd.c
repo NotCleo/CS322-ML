@@ -4,7 +4,7 @@
 #include <string.h>
 
 #define MAX_ROWS 150  
-#define d 3 // 1 Intercept + 2 Features
+#define d 3 
 
 float sigmoid(float z) {
     return 1.0f / (1.0f + exp(-z));
@@ -12,11 +12,11 @@ float sigmoid(float z) {
 
 int main(){
     int epoch;
-    printf("Enter no of epochs (e.g., 10000): ");
+    printf("Enter no of epochs (try 10000): ");
     if (scanf("%d", &epoch) != 1) return 1;
     
     float alpha;
-    printf("Enter learning rate (e.g., 0.01): ");
+    printf("Enter learning rate (try 0.01): ");
     if (scanf("%f", &alpha) != 1) return 1;
   
     FILE *fx = fopen("/home/amrut/Downloads/logisticX.csv", "r");
@@ -33,19 +33,18 @@ int main(){
     int m_count = 0;
     char lineX[1024], lineY[1024]; 
 
-    // Preprocessing: Read X and Y, add intercept x0 = 1
     while (fgets(lineX, 1024, fx) && fgets(lineY, 1024, fy) && m_count < MAX_ROWS) {
-        X[m_count][0] = 1.0f; // Intercept term
+        X[m_count][0] = 1.0f; 
 
         char* token = strtok(lineX, ",");
-        X[m_count][1] = atof(token); // Feature 1
+        X[m_count][1] = atof(token); 
         
         token = strtok(NULL, ",");
         if (token != NULL) {
-            X[m_count][2] = atof(token); // Feature 2
+            X[m_count][2] = atof(token); 
         }
 
-        y[m_count][0] = atof(lineY); // Target label
+        y[m_count][0] = atof(lineY); 
         m_count++;
     }
     fclose(fx); fclose(fy);
@@ -79,10 +78,7 @@ int main(){
     printf("Theta 0 (Intercept): %f\n", theta[0]);
     printf("Theta 1: %f\n", theta[1]);
     printf("Theta 2: %f\n\n", theta[2]);
-    
-    // ==========================================
-    // 1. Calculate Overall Training Accuracy
-    // ==========================================
+
     int correct_predictions = 0;
     for (int i = 0; i < m_count; i++) {
         float z = theta[0] + theta[1] * X[i][1] + theta[2] * X[i][2];
@@ -95,9 +91,7 @@ int main(){
     }
     float accuracy = ((float)correct_predictions / m_count) * 100.0f;
     printf("Training Accuracy: %.2f%%\n\n", accuracy);
-// ==========================================
-    // 2. Interactive Prediction Loop
-    // ==========================================
+
     int choice;
     float input_x1, input_x2;
 
@@ -107,7 +101,7 @@ int main(){
         printf("Choice: ");
         
         if (scanf("%d", &choice) != 1) {
-            while(getchar() != '\n'); // clear buffer
+            while(getchar() != '\n'); 
             continue;
         }
 
@@ -130,7 +124,6 @@ int main(){
             float prob = sigmoid(z);
             int pred_class = (prob >= 0.5f) ? 1 : 0;
 
-            printf("\n--- Results ---\n");
             printf("Z value: %.4f\n", z);
             printf("Predicted Probability: %.4f\n", prob);
             printf("Predicted Class: %d\n\n", pred_class);
@@ -140,7 +133,7 @@ int main(){
             break;
         } 
         else {
-            printf("Invalid choice. Try again.\n\n");
+            printf("Try again.\n\n");
         }
-    }    return 0;
+    }   
 }
